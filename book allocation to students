@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+bool ispossible(int arr[],int n,int m,int mid){
+    int pagesum=0;
+    int studentcount=1;
+    for(int i=0;i<n;i++){
+        if(pagesum+arr[i]<=mid)
+            pagesum+=arr[i];
+        else{
+            studentcount++;
+            if(studentcount>m||arr[i]>mid)
+                return false;
+            pagesum=arr[i];
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    int n;
+    cout<<"Enter number of books :";cin>>n;
+    int arr[n];
+    cout<<"Enter number of pages for each books :";
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    int m;
+    cout<<"Enter number of students :";cin>>m;
+    int s=0;
+    int e=0;
+    for(int i=0;i<n;i++){
+        e+=arr[i];
+    }
+    int mid=s+(e-s)/2;
+    int ans=0;
+    while(s<=e){
+        if(ispossible(arr,n,m,mid)){
+            ans=mid;
+            e=mid-1;
+        }
+        else{
+            s=mid+1;
+        }
+        mid=s+(e-s)/2;
+    }
+    cout<<ans;
+   
+    return 0;
+}
